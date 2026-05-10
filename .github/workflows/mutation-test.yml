@@ -9,10 +9,14 @@ name: "Mutation Test (manual)"
 
 on:
   workflow_dispatch:
+  # Run weekly on Sunday at 02:00 UTC (Saturday evening US time). Off-hours
+  # so it does not compete with weekday CI minutes. Final state once merged.
+  schedule:
+    - cron: "0 2 * * 0"
   # TEMPORARY: lets us iterate on this workflow before it lands on the default
-  # branch (workflow_dispatch only works once the file is on default). Remove
-  # this push: block before merging — final state should be workflow_dispatch
-  # only.
+  # branch (schedule and workflow_dispatch only fire once the file is on the
+  # default branch). Remove this push: block before merging — final state
+  # should be schedule + workflow_dispatch only.
   push:
     branches:
       - litellm_mutation_test_smoke
